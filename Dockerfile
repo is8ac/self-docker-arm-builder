@@ -26,12 +26,5 @@ RUN git clone git://git.drogon.net/wiringPi && \
   cd wiringPi && \
   ./build
 
-RUN curl https://github.com/watson-intu/self/archive/develop.zip | gunzip 
-
-COPY self /self
-
-#RUN git clone --branch develop https://github.com/watson-intu/self.git
-#RUN git clone --branch develop --recursive https://github.com/watson-intu/self.git
-#RUN git submodule update --init --recursive
-
-#RUN cd self && ./scripts/build_raspi.sh
+COPY tc_install.sh /tc_install.sh
+RUN bash tc_install.sh

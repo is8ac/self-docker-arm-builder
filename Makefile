@@ -3,18 +3,17 @@ SYSTEM_ARCH := $(shell uname -m | sed 's/\(...\).*/\1/')
 GROUP_ID := $(shell id -g)
 USER_ID := $(shell id -u)
 
-
-
-git_repo: self/.git/HEAD
-	git clone --branch develop --recursive https://github.com/watson-intu/self.git
-	cd self && git submodule update --init --recursive
-
-self: target/builddockerimage
+self: target/builddockerimage self/.git/HEAD
 	docker run -it \
 	-v $$PWD/self:/self \
 	self-builder \
 	sh -c "cd /self/ && scripts/build_raspi.sh"
 
+self/.git/HEAD:
+	git clone --branch develop --recursive https://github.com/watson-intu/self.git
+	cd self && git submodule update --init --recursive
+
+
 target/builddockerimage: Dockerfile
-	docker build -t self-builder -f Dockerfile-linux.bld .
+	docker build -t self-builder -f Dockerfile .
 	touch target/builddockerimage
