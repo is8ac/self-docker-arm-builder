@@ -25,6 +25,3 @@ RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh; \
 RUN git clone git://git.drogon.net/wiringPi && \
   cd wiringPi && \
   ./build
-
-COPY tc_install.sh /tc_install.sh
-RUN bash tc_install.sh
